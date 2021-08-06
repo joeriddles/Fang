@@ -7,15 +7,18 @@ Inspired by [Aaron Bassett's](https://github.com/aaronbassett/) [FARM Stack](htt
 
 ## Frontend
 
-```
-> npm install -g @angular/cli
-> ng new frontend
-? Would you like to add Angular routing? Yes
-? Which stylesheet format would you like to use? SCSS
+```shell
+cd ./frontend
+ng serve --open
 ```
 
 ## Backend
 
-```
-
+```shell
+> cd ./backend
+> python -m virtualenv .venv
+> ./.venv/Scripts/activate.ps1
+(.venv) > pip install -r requirements.txt
+(.venv) > cd ..
+(.venv) > python -m backend
 ```
