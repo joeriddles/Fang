@@ -11,7 +11,7 @@ import { MessageService } from './message.service';
 })
 export class HeroService {
 
-    private heroesUrl = 'http://localhost:5000/api/heroes';
+    private heroesUrl = 'http://localhost:5000/api/heroes/';
 
     httpOptions = {
         headers: new HttpHeaders({ 'Content-Type': 'application/json '})
@@ -30,7 +30,7 @@ export class HeroService {
     }
 
     getHero(id: number): Observable<Hero> {
-        const url = `${this.heroesUrl}/${id}`;
+        const url = `${this.heroesUrl}${id}/`;
         return this.http.get<Hero>(url).pipe(
             tap(_ => this.log(`fetched hero id=${id}`)),
             catchError(this.handleError<Hero>(`getHero id=${id}`)),
@@ -52,7 +52,7 @@ export class HeroService {
     }
 
     deleteHero(id: number): Observable<Hero> {
-        const url = `${this.heroesUrl}/${id}`;
+        const url = `${this.heroesUrl}${id}/`;
         return this.http.delete<Hero>(url, this.httpOptions).pipe(
             tap(_ => this.log(`deleted hero id=${id}`)),
             catchError(this.handleError<Hero>('deleteHero')),
@@ -64,7 +64,7 @@ export class HeroService {
             return of([]);
         }
 
-        return this.http.get<Hero[]>(`${this.heroesUrl}/?name=${term}`).pipe(
+        return this.http.get<Hero[]>(`${this.heroesUrl}?name=${term}`).pipe(
             tap(x => x.length
                 ? this.log(`found heroes matching "${term}"`)
                 : this.log(`no heroes matching "${term}"`)
