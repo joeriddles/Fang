@@ -2,7 +2,7 @@ version: "3.9"
 services:
     frontend:
         container_name: frontend
-        image: fapp-frontend:latest
+        image: fang-frontend:latest
         build: 
             dockerfile: ./frontend/Dockerfile
             context: .
@@ -11,7 +11,7 @@ services:
 
     backend:
         container_name: backend
-        image: fapp-backend:latest
+        image: fang-backend:latest
         build: 
             dockerfile: ./backend/Dockerfile
             context: .
