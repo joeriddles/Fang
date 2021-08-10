@@ -1,4 +1,4 @@
-![Fang - FastApi & Angular + Postgres](./resources/Fang-social-media.png)
+![Fang - FastApi & Angular + Postgres](./resources/Fang%20-%20social%20media.png)
 
 # [FastAPI](https://fastapi.tiangolo.com/) // [Angular](https://angular.io/) // [Postgres](https://www.postgresql.org/)
 
