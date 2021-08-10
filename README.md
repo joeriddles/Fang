@@ -1,4 +1,6 @@
-# FastAPI, Angular, Python, Postgres.
+# Fang &ndash; [FastAPI](https://fastapi.tiangolo.com/) & [Angular](https://angular.io/)
+
+## + Postgres
 
 Inspired by [Aaron Bassett's](https://github.com/aaronbassett/) [FARM Stack](https://www.mongodb.com/developer/how-to/FARM-Stack-FastAPI-React-MongoDB/).
 
