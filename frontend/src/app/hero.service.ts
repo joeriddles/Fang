@@ -21,9 +21,7 @@ export class HeroService {
     constructor(
         private http: HttpClient,
         private messageService: MessageService
-    ) { }
-
-    ngOnInit(): void {
+    ) {
         this.apiUrl = environment.apiUrl;
     }
 
