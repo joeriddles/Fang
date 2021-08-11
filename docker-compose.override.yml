@@ -1,0 +1,21 @@
+version: "3.9"
+services:
+  frontend:
+    image: fang-frontend:latest
+    build:
+      dockerfile: ./frontend/Dockerfile
+      context: .
+      target: base
+    volumes:
+      - ./frontend:/app
+
+  backend:
+    image: fang-backend:latest
+    build:
+      dockerfile: ./backend/Dockerfile
+      context: .
+      target: base
+    volumes:
+      - ./backend:/app/backend
+    environment:
+      - LOGLEVEL=DEBUG

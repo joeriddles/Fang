@@ -1,19 +1,41 @@
 version: "3.9"
 services:
-    frontend:
-        container_name: frontend
-        image: fang-frontend:latest
-        build: 
-            dockerfile: ./frontend/Dockerfile
-            context: .
-        ports: 
-            - "4200:4200"
+  frontend:
+    container_name: frontend
+    hostname: frontend
+    image: fang-frontend:latest
+    build:
+      dockerfile: ./frontend/Dockerfile
+      context: .
+    ports:
+      - 4200:4200
 
-    backend:
-        container_name: backend
-        image: fang-backend:latest
-        build: 
-            dockerfile: ./backend/Dockerfile
-            context: .
-        ports: 
-            - "8000:8000"
+  backend:
+    container_name: backend
+    hostname: backend
+    image: fang-backend:latest
+    build:
+      dockerfile: ./backend/Dockerfile
+      context: .
+    ports:
+      - 8000:8000
+    environment:
+      DB_URI: ${DB_URI}
+    depends_on:
+      - db
+
+  db:
+    container_name: db
+    hostname: db
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - 5432:5432
+
+  adminer:
+    container_name: adminer
+    hostname: adminer
+    image: adminer
+    ports:
+      - 8080:8080
