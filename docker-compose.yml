@@ -2,6 +2,7 @@ version: "3.9"
 services:
   frontend:
     container_name: frontend
+    hostname: frontend
     image: fang-frontend:latest
     build:
       dockerfile: ./frontend/Dockerfile
@@ -11,6 +12,7 @@ services:
 
   backend:
     container_name: backend
+    hostname: backend
     image: fang-backend:latest
     build:
       dockerfile: ./backend/Dockerfile
@@ -19,9 +21,12 @@ services:
       - 8000:8000
     environment:
       DB_URI: ${DB_URI}
+    depends_on:
+      - db
 
   db:
     container_name: db
+    hostname: db
     image: postgres
     environment:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
@@ -30,6 +35,7 @@ services:
 
   adminer:
     container_name: adminer
+    hostname: adminer
     image: adminer
     ports:
       - 8080:8080

@@ -8,7 +8,6 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 
 from .db_base import Base
-from .db_hero import DbHero
 from .hero import CreateHero, Hero
 from .mock_heroes import HEROES
 from .settings import Settings
@@ -19,6 +18,7 @@ app = FastAPI()
 origins = [
     "http://localhost:4200",
     "http://127.0.0.1:4200",
+    "http://frontend:4200",
 ]
 
 app.add_middleware(
@@ -44,21 +44,16 @@ def get_db() -> Session:
         db.close()
 
 
-def get_hero_service():
-    db = get_db()
-    hero_service = HeroService(db)
-    return hero_service
-
-
-    
 @app.get("/api/heroes/", response_model=list[Hero])
-def list_heroes(name: Optional[str]=None, hero_service: HeroService = Depends(get_hero_service)) -> list[Hero]:
+def list_heroes(name: Optional[str]=None, db: Session = Depends(get_db)) -> list[Hero]:
+    hero_service = HeroService(db)
     heroes = hero_service.list_heroes(name)
     return heroes
 
 
 @app.get("/api/heroes/{id}/", response_model=Hero)
-def get_hero_by_id(id: int, hero_service: HeroService = Depends(get_hero_service)) -> Hero:
+def get_hero_by_id(id: int, db: Session = Depends(get_db)) -> Hero:
+    hero_service = HeroService(db)
     hero = hero_service.get_hero_by_id(id)
     if hero is None:
         raise HTTPException(404, f"Hero with id={id} not found")
@@ -66,7 +61,8 @@ def get_hero_by_id(id: int, hero_service: HeroService = Depends(get_hero_service
 
 
 @app.post("/api/heroes/", response_model=Hero)
-def add_hero(create_hero: CreateHero, hero_service: HeroService = Depends(get_hero_service)) -> Hero:
+def add_hero(create_hero: CreateHero, db: Session = Depends(get_db)) -> Hero:
+    hero_service = HeroService(db)
     hero = hero_service.create_hero(create_hero)
     return hero
 

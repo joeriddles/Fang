@@ -14,7 +14,7 @@ class HeroService:
     def list_heroes(self, name: Optional[str]=None) -> list[Hero]:
         if name is not None:
             name = name.casefold()
-            db_heroes = self.db.query(DbHero).filter(DbHero.name == name)
+            db_heroes = self.db.query(DbHero).filter(DbHero.name.like(f'%name%'))
         else:
             db_heroes = self.db.query(DbHero).all()
         heroes = [

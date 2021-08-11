@@ -1,0 +1,23 @@
+version: "3.9"
+services:
+  frontend:
+    image: fang-frontend:prod
+    build:
+      dockerfile: ./frontend/Dockerfile
+      context: .
+      target: prod
+    restart: unless-stopped
+
+  backend:
+    image: fang-backend:prod
+    build:
+      dockerfile: ./backend/Dockerfile
+      context: .
+      target: prod
+    restart: unless-stopped
+
+  db:
+    restart: unless-stopped
+
+  adminer:
+    restart: unless-stopped
