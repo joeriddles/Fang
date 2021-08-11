@@ -7,20 +7,43 @@ Inspired by [Aaron Bassett's](https://github.com/aaronbassett/) [FARM Stack](htt
 
 ---
 
+## Setup
+
+```
+cp ./sample.env ./.env
+```
+
 ## Frontend
 
 ```shell
 cd ./frontend
-ng serve --open
+npm ci
+npm run serve
 ```
 
 ## Backend
 
 ```shell
-> cd ./backend
-> python -m virtualenv .venv
-> ./.venv/Scripts/activate.ps1
-(.venv) > pip install -r requirements.txt
-(.venv) > cd ..
-(.venv) > python -m backend
+cd ./backend
+python -m virtualenv .venv
+./.venv/Scripts/activate.ps1
+pip install -r requirements.txt
+cd ..
+python -m backend
+```
+
+## Docker
+
+Dev
+
+```shell
+docker compose build
+docker compose up -d
+```
+
+Prod
+
+```shell
+docker compose -f ./docker-compose.yml -f ./docker-compose.prod yml build
+docker compose -f ./docker-compose.yml -f ./docker-compose.prod yml up -d
 ```
