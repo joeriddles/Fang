@@ -8,9 +8,7 @@ CMD [ "run", "watch" ]
 
 FROM base as build
 COPY ./frontend /app/
-RUN npm run build
-CMD [ "run", "start" ]
-
+RUN npm run build-prod
 
 FROM nginx as prod
-COPY --from=build /app/dist /usr/share/nginx/html
+COPY --from=build /app/dist/frontend /usr/share/nginx/html

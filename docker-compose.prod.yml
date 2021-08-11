@@ -7,6 +7,8 @@ services:
       context: .
       target: prod
     restart: unless-stopped
+    ports: 
+      - 4200:80
 
   backend:
     image: fang-backend:prod

@@ -8,6 +8,8 @@ services:
       target: base
     volumes:
       - ./frontend:/app
+    ports:
+      - 4200:4200
 
   backend:
     image: fang-backend:latest
