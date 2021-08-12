@@ -39,3 +39,18 @@ class HeroService:
         created_hero = Hero.from_orm(db_hero)
         return created_hero
 
+    def update_hero(self, id: int, update: Hero) -> Hero:
+        update_count = self.db.query(DbHero) \
+            .filter(DbHero.id == id) \
+            .limit(1) \
+            .update(update.dict(exclude={ 'id' }))
+        self.db.commit()
+        if update_count == 0:
+            raise ValueError(id)
+
+    def delete_hero(self, id: int) -> int:
+        hero = self.get_hero_by_id(id)
+        if hero is None:
+            raise ValueError(id)
+        self.db.delete(hero)
+        self.db.commit()
