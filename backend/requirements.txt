@@ -1,5 +1,6 @@
 fastapi
 psycopg2
+pytest
 python-dotenv 
 SQLAlchemy
 uvicorn
