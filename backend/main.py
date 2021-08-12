@@ -64,17 +64,17 @@ def add_hero(create_hero: CreateHero, db: Session = Depends(db_base.get_db)) -> 
 
 
 @app.put(
-    "/api/heroes/{id}/",
+    "/api/heroes/",
     response_model=None,
     response_class=Response,
     status_code=204,
 )
-def update_hero(id: int, update: Hero, db: Session = Depends(db_base.get_db)) -> None:
+def update_hero(update: Hero, db: Session = Depends(db_base.get_db)) -> None:
     hero_service = HeroService(db)
     try:
-        hero_service.update_hero(id, update)
+        hero_service.update_hero(update)
     except ValueError:
-        raise_404(id)
+        raise_404(update.id)
 
 
 @app.delete(

@@ -39,7 +39,7 @@ def test__hero_service__create_hero(db: Session):
 def test__hero_service__update_hero(db: Session):
     hero_service = HeroService(db)
     update = Hero(id = 2, name = 'Team Player')
-    hero_service.update_hero(2, update)
+    hero_service.update_hero(update)
     hero = hero_service.get_hero_by_id(2)
     assert hero == Hero(id = 2, name = 'Team Player')
 
