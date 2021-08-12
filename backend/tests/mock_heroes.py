@@ -1,4 +1,4 @@
-from .hero import Hero
+from backend.hero import Hero
 
 
 HEROES: list[Hero] = [

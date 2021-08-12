@@ -1,4 +1,3 @@
-
 from typing import Optional, Union
 
 from sqlalchemy.orm.session import Session
@@ -13,8 +12,8 @@ class HeroService:
 
     def list_heroes(self, name: Optional[str]=None) -> list[Hero]:
         if name is not None:
-            name = name.casefold()
-            db_heroes = self.db.query(DbHero).filter(DbHero.name.like(f'%name%'))
+            name_filter = f'%{name}%'
+            db_heroes = self.db.query(DbHero).filter(DbHero.name.ilike(name_filter))
         else:
             db_heroes = self.db.query(DbHero).all()
         heroes = [
@@ -39,18 +38,17 @@ class HeroService:
         created_hero = Hero.from_orm(db_hero)
         return created_hero
 
-    def update_hero(self, id: int, update: Hero) -> Hero:
+    def update_hero(self, id: int, update: Hero):
         update_count = self.db.query(DbHero) \
             .filter(DbHero.id == id) \
-            .limit(1) \
             .update(update.dict(exclude={ 'id' }))
         self.db.commit()
         if update_count == 0:
             raise ValueError(id)
 
-    def delete_hero(self, id: int) -> int:
-        hero = self.get_hero_by_id(id)
-        if hero is None:
+    def delete_hero(self, id: int):
+        db_hero = self.db.query(DbHero).get(id)
+        if db_hero is None:
             raise ValueError(id)
-        self.db.delete(hero)
+        self.db.delete(db_hero)
         self.db.commit()
