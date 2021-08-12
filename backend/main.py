@@ -9,7 +9,6 @@ from sqlalchemy.orm.session import Session
 
 from .db_base import DbBase
 from .hero import CreateHero, Hero
-from .mock_heroes import HEROES
 
 
 app = FastAPI()
@@ -70,8 +69,8 @@ def add_hero(create_hero: CreateHero, db: Session = Depends(db_base.get_db)) -> 
     response_class=Response,
     status_code=204,
 )
-def update_hero(id: int, update: Hero) -> None:
-    hero_service = HeroService()
+def update_hero(id: int, update: Hero, db: Session = Depends(db_base.get_db)) -> None:
+    hero_service = HeroService(db)
     try:
         hero_service.update_hero(id, update)
     except ValueError:
@@ -80,21 +79,13 @@ def update_hero(id: int, update: Hero) -> None:
 
 @app.delete(
     "/api/heroes/{id}/",
-    response_model=Hero
+    response_model=None,
+    response_class=Response,
+    status_code=204,
 )
-def delete_hero(id: int) -> None:
-    try:
-        hero_index = [
-            index
-            for index
-            in range(len(HEROES))
-            if HEROES[index].id == id
-        ][0]
-    except KeyError:
-        raise HTTPException(404, f"Hero with id={id} not found")
-    else:
-        hero = HEROES.pop(hero_index)
-        return hero
+def delete_hero(id: int, db: Session = Depends(db_base.get_db)) -> None:
+    hero_service = HeroService(db)
+    hero_service.delete_hero(id)
 
 
 def raise_404(id: int):
