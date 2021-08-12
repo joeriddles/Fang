@@ -1,3 +1,5 @@
+from typing import Generator
+
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -17,7 +19,7 @@ class DbBase:
         Base.metadata.create_all(bind=engine)
         self.SessionLocal = SessionLocal
 
-    def get_db(self) -> Session:
+    def get_db(self) -> Generator[Session, None, None]:
         db: Session = self.SessionLocal()
         try:
             yield db
