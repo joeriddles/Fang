@@ -1,11 +1,8 @@
-from pydantic import (
-    BaseSettings,
-    PostgresDsn,
-)
+from pydantic import BaseSettings
 
 
 class Settings(BaseSettings):
-    db_uri: PostgresDsn
+    db_uri: str
 
     class Config:
         env_file = '.env'
