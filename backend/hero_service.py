@@ -38,9 +38,9 @@ class HeroService:
         created_hero = Hero.from_orm(db_hero)
         return created_hero
 
-    def update_hero(self, id: int, update: Hero):
+    def update_hero(self, update: Hero):
         update_count = self.db.query(DbHero) \
-            .filter(DbHero.id == id) \
+            .filter(DbHero.id == update.id) \
             .update(update.dict(exclude={ 'id' }))
         self.db.commit()
         if update_count == 0:
