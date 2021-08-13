@@ -1,5 +1,6 @@
 FROM node:14 as base
 EXPOSE 4200
+USER node
 WORKDIR /app
 COPY ["./frontend/package.json", "./frontend/package-lock.json", "./"]
 RUN npm ci
