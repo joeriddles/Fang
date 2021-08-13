@@ -7,6 +7,11 @@ services:
     build:
       dockerfile: ./frontend/Dockerfile
       context: .
+      args:
+        UID: ${DOCKER_UID}
+        GID: ${DOCKER_GID}
+        USERNAME: ${DOCKER_USERNAME}
+    user: ${DOCKER_UID}:${DOCKER_GID}
 
   backend:
     container_name: backend
@@ -15,6 +20,11 @@ services:
     build:
       dockerfile: ./backend/Dockerfile
       context: .
+      args:
+        UID: ${DOCKER_UID}
+        GID: ${DOCKER_GID}
+        USERNAME: ${DOCKER_USERNAME}
+    user: ${DOCKER_UID}:${DOCKER_GID}
     ports:
       - 8000:8000
     environment:
@@ -30,6 +40,9 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
       - 5432:5432
+    user: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
   adminer:
     container_name: adminer
@@ -37,3 +50,7 @@ services:
     image: adminer
     ports:
       - 8080:8080
+    user: ${DOCKER_UID}:${DOCKER_GID}
+
+volumes:
+  postgres_data:
